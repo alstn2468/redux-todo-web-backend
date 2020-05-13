@@ -1,0 +1,36 @@
+version: 2
+jobs:
+    build:
+        working_directory: ~/Redux_Todo_Web_Backend
+        docker:
+            - image: circleci/python:3.7
+        steps:
+            - checkout
+            - run: sudo chown -R circleci:circleci /usr/local/bin
+            - run: sudo chown -R circleci:circleci /usr/local/lib/python3.7/site-packages
+            - restore_cache:
+                  key: deps10-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+            - run:
+                  command: |
+                      echo "--- Start Install Pipenv ---"
+                      sudo pip install pipenv
+                      echo "--- Start Install Pipenv dependencies ---"
+                      pipenv install
+                      echo "--- Check Pipenv Installed Packages ---"
+                      pipenv graph
+            - save_cache:
+                  key: deps10-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+                  paths:
+                      - ".venv"
+                      - "/usr/local/bin"
+                      - "/usr/local/lib/python3.6/site-packages"
+            - run:
+                  command: |
+                      echo "--- Start Test Using Coverage ---"
+                      pipenv run coverage run manage.py test --debug-mode
+                      echo "--- Start Save Using Codecov ---"
+                      pipenv run codecov
+
+            - store_artifacts:
+                  path: test-reports
+                  destination: test-reports
