@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.http import JsonResponse
+from unittest import mock
 from todo.models import Todo
 
 
@@ -20,8 +21,8 @@ class TodoViewTest(TestCase):
         Todo.objects.create(text="Todo Text 1", is_completed=True)
         Todo.objects.create(text="Todo Text 2")
 
-    def test_todo_list_view(self):
-        """Todo application todo_list view test
+    def test_todo_list_view_success(self):
+        """Todo application todo_list view success test
         Check todo_list view return JsonResponse with todo objects
         """
         response = self.client.get("/todo")
@@ -38,3 +39,20 @@ class TodoViewTest(TestCase):
         self.assertIn("id", data[0].keys())
         self.assertIn("isCompleted", data[0].keys())
         self.assertIn("text", data[0].keys())
+
+    def test_todo_list_view_fail(self):
+        """Todo application todo_list view fail test
+        Check todo_list view return JsonResponse with error
+        """
+        todos = Todo.objects
+
+        with mock.patch.object(todos, "all", side_effect=Exception()):
+            response = self.client.get("/todo")
+
+            self.assertIsInstance(response, JsonResponse)
+            self.assertEqual(200, response.status_code)
+
+            json_response = response.json()
+
+            self.assertIn("error", json_response.keys())
+            self.assertEqual("Can't get todo list.", json_response["error"])
