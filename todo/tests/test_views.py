@@ -77,6 +77,7 @@ class TodoViewTest(TestCase):
 
         self.assertIsNotNone(todo)
         self.assertEqual("Todo Text 3", todo.text)
+        self.assertFalse(todo.is_completed)
 
     def test_get_post_todo_view_post_fail(self):
         """Todo application get_post_todo_view view post method fail test
