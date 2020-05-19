@@ -1,11 +1,12 @@
 from django.test import TestCase
+from django.http import JsonResponse
 from todo.models import Todo
 
 
 class TodoViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        """Run only once when running TodoModelTest
+        """Run only once when running TodoViewTest
         Test Object 1 Fields :
             id           : 1
             text         : Todo Text 1
@@ -20,7 +21,13 @@ class TodoViewTest(TestCase):
         Todo.objects.create(text="Todo Text 2")
 
     def test_todo_list_view(self):
+        """Todo application todo_list view test
+        Check todo_list view return JsonResponse with todo objects
+        """
         response = self.client.get("/todo")
+        self.assertIsInstance(response, JsonResponse)
+        self.assertEqual(200, response.status_code)
+
         json_response = response.json()
 
         self.assertIn("data", json_response.keys())

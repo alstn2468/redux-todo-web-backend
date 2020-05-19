@@ -22,7 +22,7 @@ class Todo(AbstractTimeStamp):
     Inherit:
         AbstractTimeStamp
     Fields:
-        text : CharField
+        text         : CharField
         is_completed : BooleanField
     """
 
