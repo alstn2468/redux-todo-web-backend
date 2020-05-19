@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from django.http import JsonResponse
+from todo.models import Todo
 
-# Create your views here.
+
+def todo_list(request):
+    todos = Todo.objects.all()
+    todos = todos.extra(select={"isCompleted": "is_completed"})
+    data = {"data": list(todos.values("id", "text", "isCompleted"))}
+
+    return JsonResponse(data)
