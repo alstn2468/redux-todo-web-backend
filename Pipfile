@@ -12,6 +12,7 @@ django = "==2.2.10"
 coverage = "==5.0.3"
 codecov = "*"
 django-dotenv = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.7"
