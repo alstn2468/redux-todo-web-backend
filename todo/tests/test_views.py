@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.http import JsonResponse
+from http import HTTPStatus
 from unittest import mock
 from todo.models import Todo
 
@@ -50,7 +51,7 @@ class TodoViewTest(TestCase):
             response = self.client.get("/todo")
 
             self.assertIsInstance(response, JsonResponse)
-            self.assertEqual(200, response.status_code)
+            self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
 
             json_response = response.json()
 
