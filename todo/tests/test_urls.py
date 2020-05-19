@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.urls import resolve
-from todo.views import todo_list
+from todo.views import get_post_todo_view
 
 
 class TodoUrlTest(TestCase):
@@ -9,4 +9,4 @@ class TodoUrlTest(TestCase):
         Check '/todo' pattern resolved func is todo_list
         """
         found = resolve("/todo")
-        self.assertEqual(found.func, todo_list)
+        self.assertEqual(found.func, get_post_todo_view)
