@@ -60,17 +60,38 @@ class TodoViewTest(TestCase):
                 "An error has occurred. Please try again.", json_response["error"]
             )
 
-    def test_get_post_todo_view_post(self):
-        """Todo application get_post_todo_view view post method test
-        Check get_post_todo_view view return empty JsonResponse
+    def test_get_post_todo_view_post_success(self):
+        """Todo application get_post_todo_view view post method success test
+        Check get_post_todo_view view return JsonResponse with success message data
         """
-        response = self.client.post("/todo")
+        response = self.client.post("/todo", data={"text": "Todo Text 3"})
         self.assertIsInstance(response, JsonResponse)
         self.assertEqual(200, response.status_code)
 
         json_response = response.json()
 
-        self.assertEqual(0, len(json_response.keys()))
+        self.assertIn("data", json_response.keys())
+        self.assertEqual("Successfully created todo item.", json_response["data"])
+
+        todo = Todo.objects.get(text="Todo Text 3")
+
+        self.assertIsNotNone(todo)
+        self.assertEqual("Todo Text 3", todo.text)
+
+    def test_get_post_todo_view_post_fail(self):
+        """Todo application get_post_todo_view view post method fail test
+        Check get_post_todo_view view return JsonResponse with error
+        """
+        response = self.client.post("/todo")
+        self.assertIsInstance(response, JsonResponse)
+        self.assertEqual(500, response.status_code)
+
+        json_response = response.json()
+
+        self.assertIn("error", json_response.keys())
+        self.assertEqual(
+            "An error has occurred. Please try again.", json_response["error"]
+        )
 
     def test_get_post_todo_view_another_method(self):
         """Todo application get_post_todo_view view another method test
