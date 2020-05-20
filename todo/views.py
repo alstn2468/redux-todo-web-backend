@@ -39,4 +39,31 @@ def put_delete_todo_view(request, id):
     status = HTTPStatus.OK
     data = {}
 
+    try:
+        if request.method == "PUT":
+            json_body = loads(request.body)
+
+            if "isCompleted" in json_body:
+                json_body["isCompleted"] = bool(json_body["isCompleted"])
+                json_body["is_completed"] = json_body.pop("isCompleted")
+
+            todo = Todo.objects.get(id=id)
+
+            for key in json_body:
+                setattr(todo, key, json_body[key])
+
+            todo.save()
+
+            data["data"] = dumps(model_to_dict(todo))
+
+        elif request.method == "DELETE":
+            data["data"] = True
+
+        else:
+            raise Exception()
+
+    except Exception as e:
+        data["error"] = "An error has occurred. Please try again."
+        status = HTTPStatus.INTERNAL_SERVER_ERROR
+
     return JsonResponse(data, status=status)

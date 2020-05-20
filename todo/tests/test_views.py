@@ -23,8 +23,8 @@ class TodoViewTest(TestCase):
         Todo.objects.create(text="Todo Text 2")
 
     def test_get_post_todo_view_view_success(self):
-        """Todo application get_post_todo_view view get method success test
-        Check get_post_todo_view view return JsonResponse with todo objects
+        """Todo application get_post_todo_view get method success test
+        Check get_post_todo_view return JsonResponse with todo objects
         """
         response = self.client.get("/todo")
         self.assertIsInstance(response, JsonResponse)
@@ -42,8 +42,8 @@ class TodoViewTest(TestCase):
         self.assertIn("text", data[0].keys())
 
     def test_get_post_todo_view_view_fail(self):
-        """Todo application get_post_todo_view view get method fail test
-        Check get_post_todo_view view return JsonResponse with error
+        """Todo application get_post_todo_view get method fail test
+        Check get_post_todo_view return JsonResponse with error
         """
         todos = Todo.objects
 
@@ -61,8 +61,8 @@ class TodoViewTest(TestCase):
             )
 
     def test_get_post_todo_view_post_success(self):
-        """Todo application get_post_todo_view view post method success test
-        Check get_post_todo_view view return JsonResponse with created object
+        """Todo application get_post_todo_view post method success test
+        Check get_post_todo_view return JsonResponse with created object
         """
         response = self.client.post("/todo", data={"text": "Todo Text 3"})
         self.assertIsInstance(response, JsonResponse)
@@ -83,8 +83,8 @@ class TodoViewTest(TestCase):
         self.assertFalse(todo.is_completed)
 
     def test_get_post_todo_view_post_fail(self):
-        """Todo application get_post_todo_view view post method fail test
-        Check get_post_todo_view view return JsonResponse with error
+        """Todo application get_post_todo_view post method fail test
+        Check get_post_todo_view return JsonResponse with error
         """
         response = self.client.post("/todo")
         self.assertIsInstance(response, JsonResponse)
@@ -98,8 +98,8 @@ class TodoViewTest(TestCase):
         )
 
     def test_get_post_todo_view_another_method(self):
-        """Todo application get_post_todo_view view another method test
-        Check get_post_todo_view view return JsonResponse with error
+        """Todo application get_post_todo_view another method test
+        Check get_post_todo_view return JsonResponse with error
         """
         response = self.client.delete("/todo")
         self.assertIsInstance(response, JsonResponse)
@@ -112,14 +112,54 @@ class TodoViewTest(TestCase):
             "An error has occurred. Please try again.", json_response["error"]
         )
 
-    def test_put_delete_todo_view(self):
-        """Todo application put_delete_todo_view view test
-        Check put_delete_todo_view view return empty JsonResponse
+    def test_put_delete_todo_view_put_success(self):
+        """Todo application put_delete_todo_view view put method test
+        Check put_delete_todo_view return JsonResponse with updated data
         """
-        response = self.client.get("/todo/1")
+        response = self.client.put(
+            "/todo/1", data='{"text": "Edit Text", "isCompleted": "true"}'
+        )
         self.assertIsInstance(response, JsonResponse)
         self.assertEqual(HTTPStatus.OK, response.status_code)
 
         json_response = response.json()
 
-        self.assertEqual(0, len(json_response))
+        self.assertIn("data", json_response.keys())
+        self.assertEqual(
+            '{"id": 1, "text": "Edit Text", "is_completed": true}',
+            json_response["data"],
+        )
+
+        todo = Todo.objects.get(id=1)
+
+        self.assertIsNotNone(todo)
+        self.assertEqual("Edit Text", todo.text)
+        self.assertTrue(todo.is_completed)
+
+    def test_put_delete_todo_view_delete_success(self):
+        """Todo application put_delete_todo_view view delete method test
+        Check put_delete_todo_view return JsonResponse with success status
+        """
+        response = self.client.delete("/todo/1")
+        self.assertIsInstance(response, JsonResponse)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
+
+        json_response = response.json()
+
+        self.assertIn("data", json_response.keys())
+        self.assertTrue(json_response["data"])
+
+    def test_put_delete_todo_view_another_method(self):
+        """Todo application put_delete_todo_view another method test
+        Check put_delete_todo_view return JsonResponse with error
+        """
+        response = self.client.get("/todo/1")
+        self.assertIsInstance(response, JsonResponse)
+        self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
+
+        json_response = response.json()
+
+        self.assertIn("error", json_response.keys())
+        self.assertEqual(
+            "An error has occurred. Please try again.", json_response["error"]
+        )
