@@ -28,7 +28,7 @@ class TodoViewTest(TestCase):
         """
         response = self.client.get("/todo")
         self.assertIsInstance(response, JsonResponse)
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
 
         json_response = response.json()
 
@@ -66,7 +66,7 @@ class TodoViewTest(TestCase):
         """
         response = self.client.post("/todo", data={"text": "Todo Text 3"})
         self.assertIsInstance(response, JsonResponse)
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(HTTPStatus.OK, response.status_code)
 
         json_response = response.json()
 
@@ -85,7 +85,7 @@ class TodoViewTest(TestCase):
         """
         response = self.client.post("/todo")
         self.assertIsInstance(response, JsonResponse)
-        self.assertEqual(500, response.status_code)
+        self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
 
         json_response = response.json()
 
@@ -100,7 +100,7 @@ class TodoViewTest(TestCase):
         """
         response = self.client.delete("/todo")
         self.assertIsInstance(response, JsonResponse)
-        self.assertEqual(500, response.status_code)
+        self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
 
         json_response = response.json()
 
