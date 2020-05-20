@@ -1,10 +1,12 @@
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from http import HTTPStatus
 from json import loads, dumps
 from django.forms.models import model_to_dict
 from todo.models import Todo
 
 
+@csrf_exempt
 def get_post_todo_view(request):
     status = HTTPStatus.OK
     data = {}
@@ -36,6 +38,7 @@ def get_post_todo_view(request):
     return JsonResponse(data, status=status)
 
 
+@csrf_exempt
 def put_delete_todo_view(request, id):
     status = HTTPStatus.OK
     data = {}
@@ -55,15 +58,18 @@ def put_delete_todo_view(request, id):
 
             todo.save()
 
-            data["data"] = dumps(model_to_dict(todo))
+            data["data"] = model_to_dict(todo)
 
         elif request.method == "DELETE":
+            todo = Todo.objects.get(id=id)
+            todo.delete()
+
             data["data"] = True
 
         else:
             raise Exception()
 
-    except Exception as e:
+    except Exception:
         data["error"] = "An error has occurred. Please try again."
         status = HTTPStatus.INTERNAL_SERVER_ERROR
 

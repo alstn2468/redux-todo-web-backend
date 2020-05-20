@@ -121,7 +121,9 @@ class TodoViewTest(TestCase):
         Check put_delete_todo_view return JsonResponse with updated data
         """
         response = self.client.put(
-            "/todo/1", data='{"text": "Edit Text", "isCompleted": "true"}'
+            "/todo/1",
+            data={"text": "Edit Text", "isCompleted": True},
+            content_type="application/json",
         )
         self.assertIsInstance(response, JsonResponse)
         self.assertEqual(HTTPStatus.OK, response.status_code)
@@ -130,8 +132,7 @@ class TodoViewTest(TestCase):
 
         self.assertIn("data", json_response.keys())
         self.assertEqual(
-            '{"id": 1, "text": "Edit Text", "is_completed": true}',
-            json_response["data"],
+            {"id": 1, "text": "Edit Text", "is_completed": True}, json_response["data"],
         )
 
         todo = Todo.objects.get(id=1)
@@ -152,6 +153,12 @@ class TodoViewTest(TestCase):
 
         self.assertIn("data", json_response.keys())
         self.assertTrue(json_response["data"])
+
+        with self.assertRaises(Todo.DoesNotExist):
+            Todo.objects.get(id=1)
+
+        todos = Todo.objects.all()
+        self.assertEqual(1, len(todos))
 
     def test_put_delete_todo_view_another_method(self):
         """Todo application put_delete_todo_view another method test
