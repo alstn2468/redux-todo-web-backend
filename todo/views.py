@@ -31,3 +31,10 @@ def get_post_todo_view(request):
         status = HTTPStatus.INTERNAL_SERVER_ERROR
 
     return JsonResponse(data, status=status)
+
+
+def put_delete_todo_view(request, id):
+    status = HTTPStatus.OK
+    data = {}
+
+    return JsonResponse(data, status=status)
