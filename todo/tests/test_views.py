@@ -64,7 +64,9 @@ class TodoViewTest(TestCase):
         """Todo application get_post_todo_view post method success test
         Check get_post_todo_view return JsonResponse with created object
         """
-        response = self.client.post("/todo", data={"text": "Todo Text 3"})
+        response = self.client.post(
+            "/todo", data={"text": "Todo Text 3"}, content_type="application/json"
+        )
         self.assertIsInstance(response, JsonResponse)
         self.assertEqual(HTTPStatus.OK, response.status_code)
 
@@ -72,7 +74,7 @@ class TodoViewTest(TestCase):
 
         self.assertIn("data", json_response.keys())
         self.assertEqual(
-            '{"id": 3, "text": "Todo Text 3", "is_completed": false}',
+            {"id": 3, "text": "Todo Text 3", "is_completed": False},
             json_response["data"],
         )
 
@@ -86,7 +88,9 @@ class TodoViewTest(TestCase):
         """Todo application get_post_todo_view post method fail test
         Check get_post_todo_view return JsonResponse with error
         """
-        response = self.client.post("/todo")
+        response = self.client.post(
+            "/todo", data={"no_text": "no_text"}, content_type="application/json"
+        )
         self.assertIsInstance(response, JsonResponse)
         self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
 

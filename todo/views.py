@@ -16,14 +16,15 @@ def get_post_todo_view(request):
             data["data"] = list(todos.values("id", "text", "isCompleted"))
 
         elif request.method == "POST":
-            text = request.POST.get("text", None)
+            json_body = loads(request.body)
+            text = json_body.get("text", None)
 
             if not text:
                 raise Exception()
 
             todo = Todo.objects.create(text=text)
 
-            data["data"] = dumps(model_to_dict(todo))
+            data["data"] = model_to_dict(todo)
 
         else:
             raise Exception()
