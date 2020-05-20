@@ -1,5 +1,7 @@
 from django.http import JsonResponse
 from http import HTTPStatus
+from json import loads, dumps
+from django.forms.models import model_to_dict
 from todo.models import Todo
 
 
@@ -19,9 +21,9 @@ def get_post_todo_view(request):
             if not text:
                 raise Exception()
 
-            Todo.objects.create(text=text)
+            todo = Todo.objects.create(text=text)
 
-            data["data"] = "Successfully created todo item."
+            data["data"] = dumps(model_to_dict(todo))
 
         else:
             raise Exception()

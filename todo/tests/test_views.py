@@ -62,7 +62,7 @@ class TodoViewTest(TestCase):
 
     def test_get_post_todo_view_post_success(self):
         """Todo application get_post_todo_view view post method success test
-        Check get_post_todo_view view return JsonResponse with success message data
+        Check get_post_todo_view view return JsonResponse with created object
         """
         response = self.client.post("/todo", data={"text": "Todo Text 3"})
         self.assertIsInstance(response, JsonResponse)
@@ -71,7 +71,10 @@ class TodoViewTest(TestCase):
         json_response = response.json()
 
         self.assertIn("data", json_response.keys())
-        self.assertEqual("Successfully created todo item.", json_response["data"])
+        self.assertEqual(
+            '{"id": 3, "text": "Todo Text 3", "is_completed": false}',
+            json_response["data"],
+        )
 
         todo = Todo.objects.get(text="Todo Text 3")
 
