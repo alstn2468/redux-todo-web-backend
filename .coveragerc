@@ -8,3 +8,5 @@ omit=
     manage.py
     # omit virtualenv dir at Windows env
     */.virtualenvs/*
+    # omit settings.py
+    */settings.py

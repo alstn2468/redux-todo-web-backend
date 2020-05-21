@@ -4,6 +4,10 @@ jobs:
         working_directory: ~/Redux_Todo_Web_Backend
         docker:
             - image: circleci/python:3.7
+            - image: circleci/postgres:9.6.2-alpine
+              environment:
+                  POSTGRES_USER: root
+                  POSTGRES_DB: todo
         steps:
             - checkout
             - run: sudo chown -R circleci:circleci /usr/local/bin
@@ -21,16 +25,44 @@ jobs:
             - save_cache:
                   key: deps10-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
                   paths:
-                      - ".venv"
-                      - "/usr/local/bin"
-                      - "/usr/local/lib/python3.6/site-packages"
+                      - '.venv'
+                      - '/usr/local/bin'
+                      - '/usr/local/lib/python3.6/site-packages'
             - run:
                   command: |
                       echo "--- Start Test Using Coverage ---"
-                      pipenv run coverage run manage.py test --settings=config.settings.development --debug-mode
+                      pipenv run coverage run manage.py test --settings='config.settings_test'
                       echo "--- Start Save Using Codecov ---"
                       pipenv run codecov
 
             - store_artifacts:
                   path: test-reports
                   destination: test-reports
+
+    deploy:
+        working_directory: ~/Redux_Todo_Web_Backend
+        docker:
+            - image: circleci/python:3.7
+            - image: circleci/postgres:9.6.2-alpine
+              environment:
+                  POSTGRES_USER: root
+                  POSTGRES_DB: todo
+        steps:
+            - checkout
+            - run:
+                  name: Deploy Master to Heroku
+                  command: |
+                      echo "--- Start Deploy To Heroku ---"
+                      git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git master
+
+workflows:
+    version: 2
+    build:
+        jobs:
+            - build
+            - deploy:
+                  requires:
+                      - build
+                  filters:
+                      branches:
+                          only: master
