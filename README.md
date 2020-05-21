@@ -18,4 +18,4 @@ This repository is backend server of this [Redux_ToDo_Web](https://github.com/al
 - [ ] Implement kakao oauth
 - [ ] Implement github oauth
 - [ ] Implement google oauth
-- [ ] Deploy to Heroku using Circle CI
+- [x] Deploy to Heroku using Circle CI
