@@ -10,3 +10,12 @@
 ### Author : [Kim Minsu](https://github.com/alstn2468)<br/>[ [Facebook](https://www.facebook.com/profile.php?id=100003769223078) ] [ [Github](https://github.com/alstn2468) ] [ [LinkedIn](https://www.linkedin.com/in/minsu-kim-336289160/) ] [ [Blog](https://alstn2468.github.io/) ]<br/>
 
 This repository is backend server of this [Redux_ToDo_Web](https://github.com/alstn2468/Redux_ToDo_Web) repository.
+
+### To Do
+
+- [ ] Connect to [Front-End Web Application](https://github.com/alstn2468/Redux_ToDo_Web)
+- [ ] Implement authentication logic using jwt
+- [ ] Implement kakao oauth
+- [ ] Implement github oauth
+- [ ] Implement google oauth
+- [ ] Deploy to Heroku using Circle CI
