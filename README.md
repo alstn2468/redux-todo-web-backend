@@ -19,3 +19,4 @@ This repository is backend server of this [Redux_ToDo_Web](https://github.com/al
 - [ ] Implement github oauth
 - [ ] Implement google oauth
 - [x] Deploy to Heroku using Circle CI
+- [ ] More detailed exception handling
