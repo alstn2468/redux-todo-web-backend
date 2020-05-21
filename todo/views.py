@@ -64,7 +64,7 @@ def put_delete_todo_view(request, id):
             todo = Todo.objects.get(id=id)
             todo.delete()
 
-            data["data"] = True
+            status = HTTPStatus.NO_CONTENT
 
         else:
             raise Exception()
