@@ -74,7 +74,7 @@ class TodoViewTest(TestCase):
 
         self.assertIn("data", json_response.keys())
         self.assertEqual(
-            {"id": 3, "text": "Todo Text 3", "is_completed": False},
+            {"id": 3, "text": "Todo Text 3", "isCompleted": False},
             json_response["data"],
         )
 
@@ -132,7 +132,7 @@ class TodoViewTest(TestCase):
 
         self.assertIn("data", json_response.keys())
         self.assertEqual(
-            {"id": 1, "text": "Edit Text", "is_completed": True}, json_response["data"],
+            {"id": 1, "text": "Edit Text", "isCompleted": True}, json_response["data"],
         )
 
         todo = Todo.objects.get(id=1)

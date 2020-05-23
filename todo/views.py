@@ -26,7 +26,10 @@ def get_post_todo_view(request):
 
             todo = Todo.objects.create(text=text)
 
-            data["data"] = model_to_dict(todo)
+            todo = model_to_dict(todo)
+            todo["isCompleted"] = todo.pop("is_completed")
+
+            data["data"] = todo
 
         else:
             raise Exception()
@@ -58,7 +61,9 @@ def put_delete_todo_view(request, id):
 
             todo.save()
 
-            data["data"] = model_to_dict(todo)
+            todo = model_to_dict(todo)
+            todo["isCompleted"] = todo.pop("is_completed")
+            data["data"] = todo
 
         elif request.method == "DELETE":
             todo = Todo.objects.get(id=id)
