@@ -47,12 +47,11 @@ class TodoViewTest(TestCase):
         """
         todos = Todo.objects
 
-        with mock.patch.object(todos, "all", side_effect=Exception()):
+        with mock.patch.object(todos, "order_by", side_effect=Exception()):
             response = self.client.get("/todo")
 
             self.assertIsInstance(response, JsonResponse)
-            self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR,
-                             response.status_code)
+            self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
 
             json_response = response.json()
 
@@ -93,8 +92,7 @@ class TodoViewTest(TestCase):
             "/todo", data={"no_text": "no_text"}, content_type="application/json"
         )
         self.assertIsInstance(response, JsonResponse)
-        self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR,
-                         response.status_code)
+        self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
 
         json_response = response.json()
 
@@ -109,8 +107,7 @@ class TodoViewTest(TestCase):
         """
         response = self.client.delete("/todo")
         self.assertIsInstance(response, JsonResponse)
-        self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR,
-                         response.status_code)
+        self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
 
         json_response = response.json()
 
@@ -135,8 +132,7 @@ class TodoViewTest(TestCase):
 
         self.assertIn("data", json_response.keys())
         self.assertEqual(
-            {"id": 1, "text": "Edit Text",
-                "is_completed": True}, json_response["data"],
+            {"id": 1, "text": "Edit Text", "is_completed": True}, json_response["data"],
         )
 
         todo = Todo.objects.get(id=1)
@@ -165,8 +161,7 @@ class TodoViewTest(TestCase):
         """
         response = self.client.get("/todo/1")
         self.assertIsInstance(response, JsonResponse)
-        self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR,
-                         response.status_code)
+        self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
 
         json_response = response.json()
 
