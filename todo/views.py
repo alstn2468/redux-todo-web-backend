@@ -13,7 +13,7 @@ def get_post_todo_view(request):
 
     try:
         if request.method == "GET":
-            todos = Todo.objects.order_by("created_at", "updated_at")
+            todos = Todo.objects.order_by("-created_at", "-updated_at")
             todos = todos.extra(select={"isCompleted": "is_completed"})
             data["data"] = list(todos.values("id", "text", "isCompleted"))
 
