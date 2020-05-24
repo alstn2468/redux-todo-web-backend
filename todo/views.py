@@ -7,7 +7,7 @@ from todo.models import Todo
 
 
 @csrf_exempt
-def get_post_todo_view(request):
+def todo_view(request):
     status = HTTPStatus.OK
     data = {}
 
@@ -31,6 +31,10 @@ def get_post_todo_view(request):
 
             data["data"] = todo
 
+        elif request.method == "DELETE":
+            Todo.objects.filter(is_completed=True).delete()
+            status = HTTPStatus.NO_CONTENT
+
         else:
             raise Exception()
 
@@ -42,7 +46,7 @@ def get_post_todo_view(request):
 
 
 @csrf_exempt
-def put_delete_todo_view(request, id):
+def todo_detail_view(request, id):
     status = HTTPStatus.OK
     data = {}
 

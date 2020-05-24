@@ -22,9 +22,9 @@ class TodoViewTest(TestCase):
         Todo.objects.create(text="Todo Text 1", is_completed=True)
         Todo.objects.create(text="Todo Text 2")
 
-    def test_get_post_todo_view_view_success(self):
-        """Todo application get_post_todo_view get method success test
-        Check get_post_todo_view return JsonResponse with todo objects
+    def test_todo_view_view_success(self):
+        """Todo application todo_view get method success test
+        Check todo_view return JsonResponse with todo objects
         """
         response = self.client.get("/todo")
         self.assertIsInstance(response, JsonResponse)
@@ -41,9 +41,9 @@ class TodoViewTest(TestCase):
         self.assertIn("isCompleted", data[0].keys())
         self.assertIn("text", data[0].keys())
 
-    def test_get_post_todo_view_view_fail(self):
-        """Todo application get_post_todo_view get method fail test
-        Check get_post_todo_view return JsonResponse with error
+    def test_todo_view_view_fail(self):
+        """Todo application todo_view get method fail test
+        Check todo_view return JsonResponse with error
         """
         todos = Todo.objects
 
@@ -60,9 +60,9 @@ class TodoViewTest(TestCase):
                 "An error has occurred. Please try again.", json_response["error"]
             )
 
-    def test_get_post_todo_view_post_success(self):
-        """Todo application get_post_todo_view post method success test
-        Check get_post_todo_view return JsonResponse with created object
+    def test_todo_view_post_success(self):
+        """Todo application todo_view post method success test
+        Check todo_view return JsonResponse with created object
         """
         response = self.client.post(
             "/todo", data={"text": "Todo Text 3"}, content_type="application/json"
@@ -84,9 +84,9 @@ class TodoViewTest(TestCase):
         self.assertEqual("Todo Text 3", todo.text)
         self.assertFalse(todo.is_completed)
 
-    def test_get_post_todo_view_post_fail(self):
-        """Todo application get_post_todo_view post method fail test
-        Check get_post_todo_view return JsonResponse with error
+    def test_todo_view_post_fail(self):
+        """Todo application todo_view post method fail test
+        Check todo_view return JsonResponse with error
         """
         response = self.client.post(
             "/todo", data={"no_text": "no_text"}, content_type="application/json"
@@ -101,11 +101,29 @@ class TodoViewTest(TestCase):
             "An error has occurred. Please try again.", json_response["error"]
         )
 
-    def test_get_post_todo_view_another_method(self):
-        """Todo application get_post_todo_view another method test
-        Check get_post_todo_view return JsonResponse with error
+    def test_todo_view_delete_success(self):
+        """Todo application todo_view delete method fail test
+        Check todo_view return JsonResponse with error
         """
+        Todo.objects.create(text="Todo Text 3", is_completed=True)
+        Todo.objects.create(text="Todo Text 4")
+
+        todos = Todo.objects.all()
+        self.assertEqual(4, len(todos))
+
         response = self.client.delete("/todo")
+        self.assertIsInstance(response, JsonResponse)
+        self.assertEqual(HTTPStatus.NO_CONTENT, response.status_code)
+
+        todos = Todo.objects.all()
+
+        self.assertEqual(2, len(todos))
+
+    def test_todo_view_another_method(self):
+        """Todo application todo_view another method test
+        Check todo_view return JsonResponse with error
+        """
+        response = self.client.put("/todo")
         self.assertIsInstance(response, JsonResponse)
         self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
 
