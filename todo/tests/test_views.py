@@ -134,9 +134,9 @@ class TodoViewTest(TestCase):
             "An error has occurred. Please try again.", json_response["error"]
         )
 
-    def test_put_delete_todo_view_put_success(self):
-        """Todo application put_delete_todo_view view put method test
-        Check put_delete_todo_view return JsonResponse with updated data
+    def test_todo_detail_view_put_success(self):
+        """Todo application todo_detail_view view put method test
+        Check todo_detail_view return JsonResponse with updated data
         """
         response = self.client.put(
             "/todo/1",
@@ -159,9 +159,9 @@ class TodoViewTest(TestCase):
         self.assertEqual("Edit Text", todo.text)
         self.assertTrue(todo.is_completed)
 
-    def test_put_delete_todo_view_delete_success(self):
-        """Todo application put_delete_todo_view view delete method test
-        Check put_delete_todo_view return JsonResponse with success status
+    def test_todo_detail_view_delete_success(self):
+        """Todo application todo_detail_view view delete method test
+        Check todo_detail_view return JsonResponse with success status
         """
         response = self.client.delete("/todo/1")
         self.assertIsInstance(response, JsonResponse)
@@ -173,9 +173,9 @@ class TodoViewTest(TestCase):
         todos = Todo.objects.all()
         self.assertEqual(1, len(todos))
 
-    def test_put_delete_todo_view_another_method(self):
-        """Todo application put_delete_todo_view another method test
-        Check put_delete_todo_view return JsonResponse with error
+    def test_todo_detail_view_another_method(self):
+        """Todo application todo_detail_view another method test
+        Check todo_detail_view return JsonResponse with error
         """
         response = self.client.get("/todo/1")
         self.assertIsInstance(response, JsonResponse)

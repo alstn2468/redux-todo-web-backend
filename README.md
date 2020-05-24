@@ -13,7 +13,7 @@ This repository is backend server of this [Redux_ToDo_Web](https://github.com/al
 
 ### To Do
 
-- [ ] Connect to [Front-End Web Application](https://github.com/alstn2468/Redux_ToDo_Web)
+- [x] Connect to [Front-End Web Application](https://github.com/alstn2468/Redux_ToDo_Web)
 - [ ] Implement authentication logic using jwt
 - [ ] Implement kakao oauth
 - [ ] Implement github oauth
