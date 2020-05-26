@@ -13,21 +13,21 @@ This repository is backend server of this [Redux_ToDo_Web](https://github.com/al
 
 ### Function
 
-- Get all todo items [➡️](#get-all-todo-items)
-- Create one todo item [➡️](#create-one-todo-item)
-- Remove all completed todo items [➡️](#remove-all-completed-todo-items)
-- Updated one todo item [➡️](#updated-one-todo-item)
-- Delete one todo itme [➡️](#delete-one-todo-item)
+-   Get all todo items [➡️](#get-all-todo-items)
+-   Create one todo item [➡️](#create-one-todo-item)
+-   Remove all completed todo items [➡️](#remove-all-completed-todo-items)
+-   Updated one todo item [➡️](#updated-one-todo-item)
+-   Delete one todo itme [➡️](#delete-one-todo-item)
 
 ### ⏰ To Do
 
-- [x] Connect to [Front-End Web Application](https://github.com/alstn2468/Redux_ToDo_Web)
-- [ ] Implement authentication logic using jwt
-- [ ] Implement kakao oauth
-- [ ] Implement github oauth
-- [ ] Implement google oauth
-- [x] Deploy to Heroku using Circle CI
-- [ ] More detailed exception handling
+-   [x] Connect to [Front-End Web Application](https://github.com/alstn2468/Redux_ToDo_Web)
+-   [ ] Implement authentication logic using jwt
+-   [ ] Implement kakao oauth
+-   [ ] Implement github oauth
+-   [ ] Implement google oauth
+-   [x] Deploy to Heroku using Circle CI
+-   [ ] More detailed exception handling
 
 ### 📝 Document
 
@@ -41,9 +41,9 @@ GET /todo
 
 ##### 2️⃣ Parameter
 
-| Name  | Description | Required |
-| :---: | :---------: | :------: |
-|   -   |      -      |    -     |
+| Name | Description | Required |
+| :--: | :---------: | :------: |
+|  -   |      -      |    -     |
 
 ##### 3️⃣ Response
 
@@ -54,27 +54,27 @@ GET /todo
 
 ##### 4️⃣ Sample
 
-- Success
+-   Success
 
 ```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 {
-    data: [
-        { id: 1, text: "todo 1", isCompleted: true },
-        { id: 2, text: "todo 2", isCompleted: false },
-        { id: 3, text: "todo 3", isCompleted: true }
+    "data": [
+        { "id": 1, "text": "todo 1", "isCompleted": true },
+        { "id": 2, "text": "todo 2", "isCompleted": false },
+        { "id": 3, "text": "todo 3", "isCompleted": true }
     ]
 }
 ```
 
-- Fail
+-   Fail
 
 ```json
 HTTP/1.1 500 INTERNAL SERVER ERROR
 Content-Type: application/json
 {
-    error: "An error has occurred. Please try again."
+    "error": "An error has occurred. Please try again."
 }
 ```
 
@@ -88,9 +88,9 @@ POST /todo
 
 ##### 2️⃣ Parameter
 
-| Name  |         Description          | Required |
-| :---: | :--------------------------: | :------: |
-| text  | Todo item text to be created |    ✔     |
+| Name |         Description          | Required |
+| :--: | :--------------------------: | :------: |
+| text | Todo item text to be created |    ✔     |
 
 ##### 3️⃣ Response
 
@@ -101,23 +101,23 @@ POST /todo
 
 ##### 4️⃣ Sample
 
-- Success
+-   Success
 
 ```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 {
-    data: { id: 4, text: "todo 4", isCompleted: false }
+    "data": { "id": 4, "text": "todo 4", "isCompleted": false }
 }
 ```
 
-- Fail
+-   Fail
 
 ```json
 HTTP/1.1 500 INTERNAL SERVER ERROR
 Content-Type: application/json
 {
-    error: "An error has occurred. Please try again."
+    "error": "An error has occurred. Please try again."
 }
 ```
 
@@ -131,9 +131,9 @@ DELETE /todo
 
 ##### 2️⃣ Parameter
 
-| Name  | Description | Required |
-| :---: | :---------: | :------: |
-|   -   |      -      |    -     |
+| Name | Description | Required |
+| :--: | :---------: | :------: |
+|  -   |      -      |    -     |
 
 ##### 3️⃣ Response
 
@@ -143,20 +143,20 @@ DELETE /todo
 
 ##### 4️⃣ Sample
 
-- Success
+-   Success
 
 ```json
 HTTP/1.1 204 NO CONTENT
 Content-Type: application/json
 ```
 
-- Fail
+-   Fail
 
 ```json
 HTTP/1.1 500 INTERNAL SERVER ERROR
 Content-Type: application/json
 {
-    error: "An error has occurred. Please try again."
+    "error": "An error has occurred. Please try again."
 }
 ```
 
@@ -185,23 +185,23 @@ PUT /todo/:id
 
 ##### 4️⃣ Sample
 
-- Success
+-   Success
 
 ```json
 HTTP/1.1 200 OK
 Content-Type: application/json
 {
-    data: { id: 4, text: "Updated Item", isCompleted: true }
+    "data": { "id": 4, "text": "Updated Item", "isCompleted": true }
 }
 ```
 
-- Fail
+-   Fail
 
 ```json
 HTTP/1.1 500 INTERNAL SERVER ERROR
 Content-Type: application/json
 {
-    error: "An error has occurred. Please try again."
+    "error": "An error has occurred. Please try again."
 }
 ```
 
@@ -215,9 +215,9 @@ DELETE /todo/:id
 
 ##### 2️⃣ Parameter
 
-| Name  | Description | Required |
-| :---: | :---------: | :------: |
-|   -   |      -      |    -     |
+| Name | Description | Required |
+| :--: | :---------: | :------: |
+|  -   |      -      |    -     |
 
 ##### 3️⃣ Response
 
@@ -227,19 +227,19 @@ DELETE /todo/:id
 
 ##### 4️⃣ Sample
 
-- Success
+-   Success
 
 ```json
 HTTP/1.1 204 NO CONTENT
 Content-Type: application/json
 ```
 
-- Fail
+-   Fail
 
 ```json
 HTTP/1.1 500 INTERNAL SERVER ERROR
 Content-Type: application/json
 {
-    error: "An error has occurred. Please try again."
+    "error": "An error has occurred. Please try again."
 }
 ```
