@@ -58,7 +58,7 @@ GET /todo
 
 ```json
 HTTP/1.1 200 OK
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 {
     data: [
         { id: 1, text: "todo 1", isCompleted: true },
@@ -72,7 +72,7 @@ Content-Type: application/json;charset=UTF-8
 
 ```json
 HTTP/1.1 500 INTERNAL SERVER ERROR
-Content-Type: application/json;charset=UTF-8
+Content-Type: application/json
 {
     error: "An error has occurred. Please try again."
 }
