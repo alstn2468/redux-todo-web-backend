@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from http import HTTPStatus
-from json import loads, dumps
+from json import loads
 from django.forms.models import model_to_dict
 from todo.models import Todo
 
