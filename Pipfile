@@ -18,6 +18,7 @@ gunicorn = "*"
 whitenoise = "==3.3.1"
 psycopg2 = "==2.7.5"
 django-heroku = "*"
+pyjwt = "*"
 
 [requires]
 python_version = "3.7"

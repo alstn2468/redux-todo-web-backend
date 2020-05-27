@@ -6,8 +6,9 @@ from user.middleware import JsonWebTokenMiddleWare
 
 
 class MockedRequest(object):
-    def __init__(self, path):
+    def __init__(self, path, headers={}):
         self.path = path
+        self.headers = headers
 
 
 class JsonWebTokenMiddleWareTest(TestCase):
@@ -30,7 +31,9 @@ class JsonWebTokenMiddleWareTest(TestCase):
         self.assertEqual("mocked_get_response", self.middleware.get_response.__name__)
         self.assertEqual("JsonWebTokenMiddleWare", self.middleware.__class__.__name__)
 
-        response = self.middleware.__call__(MockedRequest("/todo"))
+        response = self.middleware.__call__(
+            MockedRequest("/todo", {"access_token": f"{'a'* 20}"})
+        )
         self.assertIsInstance(response, JsonResponse)
         self.assertEqual(response.status_code, HTTPStatus.OK)
 

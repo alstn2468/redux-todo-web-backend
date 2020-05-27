@@ -11,15 +11,15 @@ class JsonWebTokenMiddleWare(object):
         self.get_response = get_response
 
     def __call__(self, request):
-        if request.path == "/signup" or request.path == "/login":
-            # 회원 가입 시 토큰 생성 및 로그인
-            # 로그인 시 토큰 생성
-            pass
-
-        else:
-            # 나머지 토큰 검증
-            pass
+        if request.path != "/signup" or request.path != "/login":
+            # Except signup and login
+            # Verify request access token at headers
+            headers = request.headers
+            access_token = headers.get("access_token", None)
 
         response = self.get_response(request)
+
+        # SignUp or Login
+        # Create access token from request payload
 
         return response
