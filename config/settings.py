@@ -24,7 +24,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = ["corsheaders"]
 
-PROJECT_APPS = ["todo.apps.TodoConfig"]
+PROJECT_APPS = ["todo.apps.TodoConfig", "user.apps.UserConfig"]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + PROJECT_APPS
 
