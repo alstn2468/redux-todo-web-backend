@@ -22,7 +22,7 @@ class TodoViewTest(TestCase):
         Todo.objects.create(text="Todo Text 1", is_completed=True)
         Todo.objects.create(text="Todo Text 2")
 
-    def test_todo_view_view_success(self):
+    def test_todo_view_get_success(self):
         """Todo application todo_view get method success test
         Check todo_view return JsonResponse with todo objects
         """
@@ -41,7 +41,7 @@ class TodoViewTest(TestCase):
         self.assertIn("isCompleted", data[0].keys())
         self.assertIn("text", data[0].keys())
 
-    def test_todo_view_view_fail(self):
+    def test_todo_view_get_fail(self):
         """Todo application todo_view get method fail test
         Check todo_view return JsonResponse with error
         """
