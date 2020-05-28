@@ -21,7 +21,7 @@ class JsonWebTokenMiddleWare(object):
         self.SECRET_KEY = os.environ.get("SECRET_KEY")
 
     def __call__(self, request):
-        if request.path != "/signup" or request.path != "/login":
+        if request.path != "/signup" and request.path != "/login":
             # Except signup and login
             headers = request.headers
             # Get Authorization header or None
