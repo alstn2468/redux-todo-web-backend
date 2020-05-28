@@ -1,16 +1,26 @@
 from django.test import TestCase
 from json import loads
 from http import HTTPStatus
+from datetime import datetime, timedelta
+from user.utils.jwt import encode_jwt
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from user.middleware import JsonWebTokenMiddleWare
 
+JWT = encode_jwt(
+    {
+        "iat": datetime.now().timestamp(),
+        "exp": (datetime.now() + timedelta(days=7)).timestamp(),
+        "user": "Jone Doe",
+    }
+).decode("utf-8")
 
-JWT = (
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
-    + ".eyJ1c2VyIjoiSm9uZSBEb2UifQ"
-    + ".0ksaN51JftQtVSIw1U9pYgVbszKzQlUqM5TZd268pt0"
-)
+JWT_WITHOUT_USER = encode_jwt(
+    {
+        "iat": datetime.now().timestamp(),
+        "exp": (datetime.now() + timedelta(days=7)).timestamp(),
+    }
+).decode("utf-8")
 
 
 class MockedRequest(object):
@@ -42,6 +52,24 @@ class JsonWebTokenMiddleWareTest(TestCase):
         self.assertEqual("JsonWebTokenMiddleWare", self.middleware.__class__.__name__)
 
         response = self.middleware.__call__(MockedRequest("/todo"))
+        self.assertIsInstance(response, JsonResponse)
+        self.assertEqual(response.status_code, HTTPStatus.UNAUTHORIZED)
+
+        response_content = loads(response.content)
+
+        self.assertIn("error", response_content.keys())
+        self.assertIn("Authorization Error", response_content["error"])
+
+    def test_json_web_token_middleware_without_user(self):
+        """JsonWebTokenMiddleWare without user test
+        Check middleware return unauthorized response with error
+        """
+        self.assertEqual("mocked_get_response", self.middleware.get_response.__name__)
+        self.assertEqual("JsonWebTokenMiddleWare", self.middleware.__class__.__name__)
+
+        response = self.middleware.__call__(
+            MockedRequest("/todo", {"Authorization": JWT_WITHOUT_USER})
+        )
         self.assertIsInstance(response, JsonResponse)
         self.assertEqual(response.status_code, HTTPStatus.UNAUTHORIZED)
 

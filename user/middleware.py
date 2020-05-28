@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.core.exceptions import PermissionDenied
 from user.utils.jwt import decode_jwt
+from jwt.exceptions import ExpiredSignatureError
 from http import HTTPStatus
 
 
@@ -35,16 +36,18 @@ class JsonWebTokenMiddleWare(object):
                 # Get user from decoded jwt payload
                 username = payload.get("user", None)
 
-                # If username is exist
-                if username:
-                    # Get user object using username
-                    User.objects.get(username=username)
+                # If username is None
+                if not username:
+                    raise PermissionDenied()
+
+                # Get user object using username
+                User.objects.get(username=username)
 
             response = self.get_response(request)
 
             return response
 
-        except (PermissionDenied, User.DoesNotExist):
+        except (PermissionDenied, User.DoesNotExist, ExpiredSignatureError):
             return JsonResponse(
                 {"error": "Authorization Error"}, status=HTTPStatus.UNAUTHORIZED
             )
