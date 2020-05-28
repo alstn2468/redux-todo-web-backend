@@ -38,7 +38,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    "user.middleware.JsonWebTokenMiddleWare",
+    # "user.middleware.JsonWebTokenMiddleWare",
 ]
 
 ROOT_URLCONF = "config.urls"
