@@ -1,15 +1,13 @@
 from django.contrib.auth.models import User
-import os
-import jwt
+from django.http import JsonResponse
+from user.utils.jwt import decode_jwt
+from http import HTTPStatus
 
 
 class JsonWebTokenMiddleWare(object):
     """Custom JWT auth middleware
     Inherit :
         object
-    Member :
-        JWT_ALGORITHM : JWT encryption method
-        SECRET_KEY    : JWT encryption key
     Method :
         __init__ : Object constructor
         __call__ : Excuted by each request
@@ -17,8 +15,6 @@ class JsonWebTokenMiddleWare(object):
 
     def __init__(self, get_response):
         self.get_response = get_response
-        self.JWT_ALGORITHM = os.environ.get("JWT_ALGORITHM")
-        self.SECRET_KEY = os.environ.get("SECRET_KEY")
 
     def __call__(self, request):
         if request.path != "/signup" and request.path != "/login":
@@ -27,20 +23,22 @@ class JsonWebTokenMiddleWare(object):
             # Get Authorization header or None
             access_token = headers.get("Authorization", None)
 
-            # If access_token is exist
-            if access_token:
-                # Decode JWT token
-                payload = jwt.decode(
-                    access_token, self.SECRET_KEY, algorithms=[self.JWT_ALGORITHM]
+            # If access_token isn't exist
+            if not access_token:
+                return JsonResponse(
+                    {"error": "Authorization Error"}, status=HTTPStatus.UNAUTHORIZED
                 )
 
-                # Get user from decoded jwt payload
-                username = payload.get("user", None)
+            # Decode JWT token
+            payload = decode_jwt(access_token)
 
-                # If username is exist
-                if username:
-                    # Get user object using username
-                    User.objects.get(username=username)
+            # Get user from decoded jwt payload
+            username = payload.get("user", None)
+
+            # If username is exist
+            if username:
+                # Get user object using username
+                User.objects.get(username=username)
 
         response = self.get_response(request)
 

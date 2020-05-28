@@ -34,6 +34,22 @@ class JsonWebTokenMiddleWareTest(TestCase):
         self.middleware = JsonWebTokenMiddleWare(self.mocked_get_response)
         User.objects.create_user(username="Jone Doe")
 
+    def test_json_web_token_middleware_without_access_token(self):
+        """JsonWebTokenMiddleWare without access token test
+        Check middleware return unauthorized response with error
+        """
+        self.assertEqual("mocked_get_response", self.middleware.get_response.__name__)
+        self.assertEqual("JsonWebTokenMiddleWare", self.middleware.__class__.__name__)
+
+        response = self.middleware.__call__(MockedRequest("/todo"))
+        self.assertIsInstance(response, JsonResponse)
+        self.assertEqual(response.status_code, HTTPStatus.UNAUTHORIZED)
+
+        response_content = loads(response.content)
+
+        self.assertIn("error", response_content.keys())
+        self.assertIn("Authorization Error", response_content["error"])
+
     def test_json_web_token_middleware_another_path(self):
         """JsonWebTokenMiddleWare excpt '/signup', '/login' path test
         Check middleware excute else block when path is '/todo'
