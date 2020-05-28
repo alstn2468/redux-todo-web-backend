@@ -1,5 +1,5 @@
 from django.test import TestCase
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotAllowed
 from http import HTTPStatus
 from unittest import mock
 from todo.models import Todo
@@ -121,21 +121,14 @@ class TodoViewTest(TestCase):
 
     def test_todo_view_another_method(self):
         """Todo application todo_view another method test
-        Check todo_view return JsonResponse with error
+        Check todo_view return return HttpResponseNotAllowed
         """
         response = self.client.put("/todo")
-        self.assertIsInstance(response, JsonResponse)
-        self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
-
-        json_response = response.json()
-
-        self.assertIn("error", json_response.keys())
-        self.assertEqual(
-            "An error has occurred. Please try again.", json_response["error"]
-        )
+        self.assertIsInstance(response, HttpResponseNotAllowed)
+        self.assertEqual(HTTPStatus.METHOD_NOT_ALLOWED, response.status_code)
 
     def test_todo_detail_view_put_success(self):
-        """Todo application todo_detail_view view put method test
+        """Todo application todo_detail_view view put method success test
         Check todo_detail_view return JsonResponse with updated data
         """
         response = self.client.put(
@@ -159,8 +152,27 @@ class TodoViewTest(TestCase):
         self.assertEqual("Edit Text", todo.text)
         self.assertTrue(todo.is_completed)
 
+    def test_todo_detail_view_put_fail(self):
+        """Todo application todo_detail_view view put method fail test
+        Check todo_detail_view return JsonResponse with error
+        """
+        response = self.client.put(
+            "/todo/3",
+            data={"text": "Edit Text", "isCompleted": True},
+            content_type="application/json",
+        )
+        self.assertIsInstance(response, JsonResponse)
+        self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
+
+        json_response = response.json()
+
+        self.assertIn("error", json_response.keys())
+        self.assertEqual(
+            "An error has occurred. Please try again.", json_response["error"],
+        )
+
     def test_todo_detail_view_delete_success(self):
-        """Todo application todo_detail_view view delete method test
+        """Todo application todo_detail_view view delete method success test
         Check todo_detail_view return JsonResponse with success status
         """
         response = self.client.delete("/todo/1")
@@ -173,11 +185,11 @@ class TodoViewTest(TestCase):
         todos = Todo.objects.all()
         self.assertEqual(1, len(todos))
 
-    def test_todo_detail_view_another_method(self):
-        """Todo application todo_detail_view another method test
+    def test_todo_detail_view_delete_fail(self):
+        """Todo application todo_detail_view view delete method fail test
         Check todo_detail_view return JsonResponse with error
         """
-        response = self.client.get("/todo/1")
+        response = self.client.delete("/todo/3")
         self.assertIsInstance(response, JsonResponse)
         self.assertEqual(HTTPStatus.INTERNAL_SERVER_ERROR, response.status_code)
 
@@ -185,5 +197,13 @@ class TodoViewTest(TestCase):
 
         self.assertIn("error", json_response.keys())
         self.assertEqual(
-            "An error has occurred. Please try again.", json_response["error"]
+            "An error has occurred. Please try again.", json_response["error"],
         )
+
+    def test_todo_detail_view_another_method(self):
+        """Todo application todo_detail_view another method test
+        Check todo_detail_view return HttpResponseNotAllowed
+        """
+        response = self.client.get("/todo/1")
+        self.assertIsInstance(response, HttpResponseNotAllowed)
+        self.assertEqual(HTTPStatus.METHOD_NOT_ALLOWED, response.status_code)

@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotAllowed
 from django.views.decorators.csrf import csrf_exempt
 from http import HTTPStatus
 from json import loads
@@ -36,7 +36,7 @@ def todo_view(request):
             status = HTTPStatus.NO_CONTENT
 
         else:
-            raise Exception()
+            return HttpResponseNotAllowed(["GET", "POST", "DELETE"])
 
     except Exception:
         data["error"] = "An error has occurred. Please try again."
@@ -76,7 +76,7 @@ def todo_detail_view(request, id):
             status = HTTPStatus.NO_CONTENT
 
         else:
-            raise Exception()
+            return HttpResponseNotAllowed(["PUT", "DELETE"])
 
     except Exception:
         data["error"] = "An error has occurred. Please try again."

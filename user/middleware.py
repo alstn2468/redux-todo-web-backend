@@ -42,9 +42,6 @@ class JsonWebTokenMiddleWare(object):
 
             response = self.get_response(request)
 
-            # SignUp or Login
-            # Create access token from request payload
-
             return response
 
         except (PermissionDenied, User.DoesNotExist):
