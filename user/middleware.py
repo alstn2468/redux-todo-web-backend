@@ -46,6 +46,7 @@ class JsonWebTokenMiddleWare(object):
             # Create access token from request payload
 
             return response
+
         except (PermissionDenied, User.DoesNotExist):
             return JsonResponse(
                 {"error": "Authorization Error"}, status=HTTPStatus.UNAUTHORIZED
