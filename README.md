@@ -13,6 +13,8 @@ This repository is backend server of this [Redux_ToDo_Web](https://github.com/al
 
 ### Function
 
+-   Login [➡️](#login)
+-   Sign Up [➡️](#sign-up)
 -   Get all todo items [➡️](#get-all-todo-items)
 -   Create one todo item [➡️](#create-one-todo-item)
 -   Remove all completed todo items [➡️](#remove-all-completed-todo-items)
@@ -31,12 +33,102 @@ This repository is backend server of this [Redux_ToDo_Web](https://github.com/al
 
 ### 📝 Document
 
+#### Login
+
+##### 1️⃣ Request
+
+```http
+POST /login
+```
+
+##### 2️⃣ Parameter
+
+|   Name   |    Description    | Required |
+| :------: | :---------------: | :------: |
+|   user   | Username to login |    ✔     |
+| password | Password to login |    ✔     |
+
+##### 3️⃣ Response
+
+|     Name     |                          Description                          |
+| :----------: | :-----------------------------------------------------------: |
+| access_token | Tokens to access API that you put in the Authorization header |
+|    error     |                   Message in case of error                    |
+
+##### 4️⃣ Sample
+
+-   Success
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+{
+    "access_token": "xxxxxxxyyyyyyyzzzzzzz"
+}
+```
+
+-   Fail
+
+```json
+HTTP/1.1 401 BAD REQUEST
+Content-Type: application/json
+{
+    "error": "Invalid form. Please fill it out again."
+}
+```
+
+#### Sign Up
+
+##### 1️⃣ Request
+
+```http
+POST /signup
+```
+
+##### 2️⃣ Parameter
+
+|      Name       |                   Description                   | Required |
+| :-------------: | :---------------------------------------------: | :------: |
+|      user       |                Username to login                |    ✔     |
+|    password     |                Password to login                |    ✔     |
+| passwordConfirm | Same data as password for password verification |    ✔     |
+
+##### 3️⃣ Response
+
+|     Name     |                          Description                          |
+| :----------: | :-----------------------------------------------------------: |
+| access_token | Tokens to access API that you put in the Authorization header |
+|    error     |                   Message in case of error                    |
+
+##### 4️⃣ Sample
+
+-   Success
+
+```json
+HTTP/1.1 201 CREATED
+Content-Type: application/json
+{
+    "access_token": "xxxxxxxyyyyyyyzzzzzzz"
+}
+```
+
+-   Fail
+
+```json
+HTTP/1.1 401 BAD REQUEST
+Content-Type: application/json
+{
+    "error": "Duplicate user name. Please use a different name."
+}
+```
+
 #### Get all todo items
 
 ##### 1️⃣ Request
 
 ```http
 GET /todo
+Authorization: {access_token}
 ```
 
 ##### 2️⃣ Parameter
@@ -61,9 +153,9 @@ HTTP/1.1 200 OK
 Content-Type: application/json
 {
     "data": [
-        { "id": 1, "text": "todo 1", "isCompleted": true },
-        { "id": 2, "text": "todo 2", "isCompleted": false },
-        { "id": 3, "text": "todo 3", "isCompleted": true }
+        { "id": 1, "text": "todo 1", "isCompleted": true, "user": 1 },
+        { "id": 2, "text": "todo 2", "isCompleted": false, "user": 1 },
+        { "id": 3, "text": "todo 3", "isCompleted": true, "user": 1 }
     ]
 }
 ```
@@ -84,6 +176,7 @@ Content-Type: application/json
 
 ```http
 POST /todo
+Authorization: {access_token}
 ```
 
 ##### 2️⃣ Parameter
@@ -107,7 +200,12 @@ POST /todo
 HTTP/1.1 200 OK
 Content-Type: application/json
 {
-    "data": { "id": 4, "text": "todo 4", "isCompleted": false }
+    "data": { 
+        "id": 4, 
+        "text": "todo 4", 
+        "isCompleted": false, 
+        "user": 1 
+    }
 }
 ```
 
@@ -127,6 +225,7 @@ Content-Type: application/json
 
 ```http
 DELETE /todo
+Authorization: {access_token}
 ```
 
 ##### 2️⃣ Parameter
@@ -166,6 +265,7 @@ Content-Type: application/json
 
 ```http
 PUT /todo/:id
+Authorization: {access_token}
 ```
 
 ##### 2️⃣ Parameter
@@ -173,8 +273,8 @@ PUT /todo/:id
 |    Name     |           Description            | Required |
 | :---------: | :------------------------------: | :------: |
 |     id      | Unique id of item to be updated  |    ✔     |
-|    text     |    Text of item to be updated    |    ✔     |
-| isCompleted | Completion of item to be updated |    ✔     |
+|    text     |    Text of item to be updated    |    -     |
+| isCompleted | Completion of item to be updated |    -     |
 
 ##### 3️⃣ Response
 
@@ -191,7 +291,12 @@ PUT /todo/:id
 HTTP/1.1 200 OK
 Content-Type: application/json
 {
-    "data": { "id": 4, "text": "Updated Item", "isCompleted": true }
+    "data": { 
+        "id": 4, 
+        "text": "Updated Item", 
+        "isCompleted": true, 
+        "user": 1 
+    }
 }
 ```
 
@@ -211,6 +316,7 @@ Content-Type: application/json
 
 ```http
 DELETE /todo/:id
+Authorization: {access_token}
 ```
 
 ##### 2️⃣ Parameter
