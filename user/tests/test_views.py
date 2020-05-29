@@ -54,7 +54,7 @@ class UserViewTest(TestCase):
 
         data = json_response["error"]
 
-        self.assertEqual("An error has occurred. Please try again.", data)
+        self.assertEqual("Invalid form. Please fill it out again.", data)
 
     def test_login_view_post_method_wrong_password(self):
         """User application login_view post method wrong password test
@@ -74,7 +74,7 @@ class UserViewTest(TestCase):
 
         data = json_response["error"]
 
-        self.assertEqual("An error has occurred. Please try again.", data)
+        self.assertEqual("Invalid form. Please fill it out again.", data)
 
     def test_login_view_post_method_without_user(self):
         """User application login_view post method without user test
@@ -92,7 +92,7 @@ class UserViewTest(TestCase):
 
         data = json_response["error"]
 
-        self.assertEqual("An error has occurred. Please try again.", data)
+        self.assertEqual("Invalid form. Please fill it out again.", data)
 
     def test_login_view_post_method_without_password(self):
         """User application login_view post method without password test
@@ -110,7 +110,7 @@ class UserViewTest(TestCase):
 
         data = json_response["error"]
 
-        self.assertEqual("An error has occurred. Please try again.", data)
+        self.assertEqual("Invalid form. Please fill it out again.", data)
 
     def test_login_view_post_method_witout_body(self):
         """User application login_view post method without body test
@@ -126,7 +126,7 @@ class UserViewTest(TestCase):
 
         data = json_response["error"]
 
-        self.assertEqual("An error has occurred. Please try again.", data)
+        self.assertEqual("Invalid form. Please fill it out again.", data)
 
     def test_login_view_except_post_method(self):
         """User application login_view another method test

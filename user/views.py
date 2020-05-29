@@ -35,20 +35,21 @@ def login_view(request):
             password = json_body.get("password", None)
 
             if not username or not password:
-                raise Exception()
+                raise ValueError()
 
             user = User.objects.get(username=username)
 
             if not user.check_password(password):
-                raise Exception()
+                raise ValueError()
 
             data["access_token"] = generate_access_token(username)
 
         else:
             return HttpResponseNotAllowed(["POST"])
 
-    except Exception:
-        data["error"] = "An error has occurred. Please try again."
+    except (ValueError, User.DoesNotExist):
+        # Login request validation exception
+        data["error"] = "Invalid form. Please fill it out again."
         status = HTTPStatus.BAD_REQUEST
 
     return JsonResponse(data, status=status)
