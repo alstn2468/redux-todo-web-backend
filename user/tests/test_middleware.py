@@ -13,14 +13,14 @@ JWT = encode_jwt(
         "exp": (datetime.now() + timedelta(days=7)).timestamp(),
         "user": "Jone Doe",
     }
-).decode("utf-8")
+)
 
 JWT_WITHOUT_USER = encode_jwt(
     {
         "iat": datetime.now().timestamp(),
         "exp": (datetime.now() + timedelta(days=7)).timestamp(),
     }
-).decode("utf-8")
+)
 
 
 class MockedRequest(object):

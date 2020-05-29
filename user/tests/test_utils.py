@@ -9,9 +9,9 @@ class JsonWebTokenUtilTest(TestCase):
         """
         self.data = {"key": "value"}
         self.jwt = (
-            b"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
-            + b".eyJrZXkiOiJ2YWx1ZSJ9"
-            + b".CYiwVVQYrlTkyXh-0X_CXdFKxgHcg5j2fuJ4fruiXE8"
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
+            + ".eyJrZXkiOiJ2YWx1ZSJ9"
+            + ".CYiwVVQYrlTkyXh-0X_CXdFKxgHcg5j2fuJ4fruiXE8"
         )
 
     def test_encode_jwt(self):
