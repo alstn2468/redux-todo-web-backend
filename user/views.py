@@ -1,9 +1,11 @@
 from django.http import JsonResponse, HttpResponseNotAllowed
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+from django.db.utils import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
-from user.utils.jwt import encode_jwt, decode_jwt
+from django.contrib.auth.password_validation import validate_password
+from user.utils.jwt import encode_jwt
 from datetime import datetime, timedelta
-from jwt.exceptions import InvalidIssuerError
 from json import loads
 from http import HTTPStatus
 
@@ -60,11 +62,45 @@ def signup_view(request):
     data = {}
     status = HTTPStatus.CREATED
 
-    if request.method == "POST":
-        data["access_token"] = "test"
+    try:
+        if request.method == "POST":
+            json_body = loads(request.body)
 
-    else:
-        return HttpResponseNotAllowed(["POST"])
+            username = json_body.get("user", None)
+            password = json_body.get("password", None)
+            password_confirm = json_body.get("passwordConfirm", None)
+
+            if not username or not password or not password_confirm:
+                raise ValueError()
+
+            if password != password_confirm:
+                raise ValueError()
+
+            validate_password(password)
+
+            user = User.objects.create_user(username=username)
+            user.set_password(password)
+            user.save()
+
+            data["access_token"] = generate_access_token(user.username)
+
+        else:
+            return HttpResponseNotAllowed(["POST"])
+
+    except ValidationError as e:
+        # Password validation exception
+        data["error"] = e.messages
+        status = HTTPStatus.BAD_REQUEST
+
+    except IntegrityError:
+        # Duplicate user name exception
+        data["error"] = "Duplicate user name. Please use a different name."
+        status = HTTPStatus.BAD_REQUEST
+
+    except ValueError:
+        # Invalid user request exception
+        data["error"] = "Invalid form. Please fill it out again."
+        status = HTTPStatus.BAD_REQUEST
 
     return JsonResponse(data, status=status)
 
