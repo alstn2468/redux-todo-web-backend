@@ -45,6 +45,7 @@ def login_view(request):
                 raise ValueError()
 
             data["access_token"] = generate_access_token(username)
+            data["user"] = username
 
         else:
             return HttpResponseNotAllowed(["POST"])
@@ -83,6 +84,7 @@ def signup_view(request):
             user.save()
 
             data["access_token"] = generate_access_token(user.username)
+            data["user"] = username
 
         else:
             return HttpResponseNotAllowed(["POST"])

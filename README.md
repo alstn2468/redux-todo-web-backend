@@ -63,7 +63,8 @@ POST /login
 HTTP/1.1 200 OK
 Content-Type: application/json
 {
-    "access_token": "xxxxxxxyyyyyyyzzzzzzz"
+    "access_token": "xxxxxxxyyyyyyyzzzzzzz",
+    "user": "username"
 }
 ```
 
@@ -108,7 +109,8 @@ POST /signup
 HTTP/1.1 201 CREATED
 Content-Type: application/json
 {
-    "access_token": "xxxxxxxyyyyyyyzzzzzzz"
+    "access_token": "xxxxxxxyyyyyyyzzzzzzz",
+    "user": "username"
 }
 ```
 

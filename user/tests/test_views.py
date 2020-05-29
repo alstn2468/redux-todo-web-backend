@@ -30,11 +30,13 @@ class UserViewTest(TestCase):
         json_response = response.json()
 
         self.assertIn("access_token", json_response.keys())
+        self.assertIn("user", json_response.keys())
 
         access_token = json_response["access_token"]
 
         self.assertIn("aud", decode_jwt(access_token).keys())
         self.assertEqual("test", decode_jwt(access_token)["aud"])
+        self.assertEqual("test", json_response["user"])
 
     def test_login_view_post_method_nonexist_user(self):
         """User application login_view post method nonexist user test
@@ -155,11 +157,13 @@ class UserViewTest(TestCase):
         json_response = response.json()
 
         self.assertIn("access_token", json_response.keys())
+        self.assertIn("user", json_response.keys())
 
         access_token = json_response["access_token"]
 
         self.assertIn("aud", decode_jwt(access_token).keys())
         self.assertEqual("test_user", decode_jwt(access_token)["aud"])
+        self.assertEqual("test_user", json_response["user"])
 
     def test_signup_view_post_method_without_user(self):
         """User application signup_view post method without user test
