@@ -103,17 +103,3 @@ def signup_view(request):
         status = HTTPStatus.BAD_REQUEST
 
     return JsonResponse(data, status=status)
-
-
-@csrf_exempt
-def logout_view(request):
-    data = {}
-    status = HTTPStatus.NO_CONTENT
-
-    if request.method == "POST":
-        pass
-
-    else:
-        return HttpResponseNotAllowed(["POST"])
-
-    return JsonResponse(data, status=status)

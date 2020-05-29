@@ -270,19 +270,3 @@ class UserViewTest(TestCase):
         response = self.client.get("/signup")
         self.assertIsInstance(response, HttpResponseNotAllowed)
         self.assertEqual(HTTPStatus.METHOD_NOT_ALLOWED, response.status_code)
-
-    def test_logout_view(self):
-        """User application logout_view post method test
-        Check logout_view return NO_CONTENT JsonResponse
-        """
-        response = self.client.post("/logout")
-        self.assertIsInstance(response, JsonResponse)
-        self.assertEqual(HTTPStatus.NO_CONTENT, response.status_code)
-
-    def test_logout_view_except_post_method(self):
-        """User application logout_view another method test
-        Check logout_view return HttpResponseNotAllowed
-        """
-        response = self.client.get("/logout")
-        self.assertIsInstance(response, HttpResponseNotAllowed)
-        self.assertEqual(HTTPStatus.METHOD_NOT_ALLOWED, response.status_code)
