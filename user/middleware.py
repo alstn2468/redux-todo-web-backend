@@ -34,7 +34,7 @@ class JsonWebTokenMiddleWare(object):
                 payload = decode_jwt(access_token)
 
                 # Get user from decoded jwt payload
-                username = payload.get("user", None)
+                username = payload.get("aud", None)
 
                 # If username is None
                 if not username:

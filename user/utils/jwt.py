@@ -11,4 +11,10 @@ def encode_jwt(data):
 
 
 def decode_jwt(access_token):
-    return jwt.decode(access_token, SECRET_KEY, algorithms=[JWT_ALGORITHM])
+    return jwt.decode(
+        access_token,
+        SECRET_KEY,
+        algorithms=[JWT_ALGORITHM],
+        issuer="Redux Todo Web Backend",
+        options={"verify_aud": False},
+    )

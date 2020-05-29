@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from user.utils.jwt import encode_jwt, decode_jwt
 from datetime import datetime, timedelta
+from jwt.exceptions import InvalidIssuerError
 from json import loads
 from http import HTTPStatus
 
@@ -11,7 +12,12 @@ def generate_access_token(username):
     iat = datetime.now()
     exp = iat + timedelta(days=7)
 
-    data = {"iat": iat.timestamp(), "exp": exp.timestamp(), "user": username}
+    data = {
+        "iat": iat.timestamp(),
+        "exp": exp.timestamp(),
+        "aud": username,
+        "iss": "Redux Todo Web Backend",
+    }
 
     return encode_jwt(data)
 
@@ -29,19 +35,19 @@ def login_view(request):
             password = json_body.get("password", None)
 
             if not username or not password:
-                raise ValueError()
+                raise Exception()
 
             user = User.objects.get(username=username)
 
             if not user.check_password(password):
-                raise ValueError()
+                raise Exception()
 
             data["access_token"] = generate_access_token(username)
 
         else:
             return HttpResponseNotAllowed(["POST"])
 
-    except (ValueError, User.DoesNotExist):
+    except Exception:
         data["error"] = "An error has occurred. Please try again."
         status = HTTPStatus.BAD_REQUEST
 

@@ -7,11 +7,11 @@ class JsonWebTokenUtilTest(TestCase):
         """Run only once when running JsonWebTokenUtilTest
         Initialize test data and test jwt
         """
-        self.data = {"key": "value"}
+        self.data = {"key": "value", "iss": "Redux Todo Web Backend"}
         self.jwt = (
             "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9"
-            + ".eyJrZXkiOiJ2YWx1ZSJ9"
-            + ".CYiwVVQYrlTkyXh-0X_CXdFKxgHcg5j2fuJ4fruiXE8"
+            + ".eyJrZXkiOiJ2YWx1ZSIsImlzcyI6IlJlZHV4IFRvZG8gV2ViIEJhY2tlbmQifQ"
+            + ".TkXu6DFt-LamfF0imQTcb6EhTrUePhqDYcOK85J88O8"
         )
 
     def test_encode_jwt(self):

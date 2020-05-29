@@ -11,7 +11,8 @@ JWT = encode_jwt(
     {
         "iat": datetime.now().timestamp(),
         "exp": (datetime.now() + timedelta(days=7)).timestamp(),
-        "user": "Jone Doe",
+        "aud": "Jone Doe",
+        "iss": "Redux Todo Web Backend",
     }
 )
 
@@ -19,6 +20,7 @@ JWT_WITHOUT_USER = encode_jwt(
     {
         "iat": datetime.now().timestamp(),
         "exp": (datetime.now() + timedelta(days=7)).timestamp(),
+        "iss": "Redux Todo Web Backend",
     }
 )
 

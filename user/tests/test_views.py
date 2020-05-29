@@ -17,7 +17,7 @@ class UserViewTest(TestCase):
 
     def test_login_view_post_method_success(self):
         """User application login_view post method without user test
-        Check login_view return JsonResponse with bad request error
+        Check login_view return JsonResponse with access_token
         """
         response = self.client.post(
             "/login",
@@ -33,8 +33,8 @@ class UserViewTest(TestCase):
 
         access_token = json_response["access_token"]
 
-        self.assertIn("user", decode_jwt(access_token).keys())
-        self.assertEqual("test", decode_jwt(access_token)["user"])
+        self.assertIn("aud", decode_jwt(access_token).keys())
+        self.assertEqual("test", decode_jwt(access_token)["aud"])
 
     def test_login_view_post_method_nonexist_user(self):
         """User application login_view post method nonexist user test
