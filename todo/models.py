@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class AbstractTimeStamp(models.Model):
@@ -22,10 +23,12 @@ class Todo(AbstractTimeStamp):
     Inherit:
         AbstractTimeStamp
     Fields:
+        user         : ForeignKey (User)
         text         : CharField
         is_completed : BooleanField
     """
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.CharField(max_length=100)
     is_completed = models.BooleanField(default=False)
 

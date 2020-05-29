@@ -6,4 +6,4 @@ from todo.models import Todo
 class TodoAdmin(admin.ModelAdmin):
     """Register model classes inherited from the AbstractItem model"""
 
-    list_display = ("id", "text", "is_completed", "created_at", "updated_at")
+    list_display = ("id", "user", "text", "is_completed", "created_at", "updated_at")

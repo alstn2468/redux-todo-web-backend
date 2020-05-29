@@ -3,6 +3,7 @@ from unittest import mock
 from pytz import utc
 from datetime import datetime
 from todo.models import Todo
+from django.contrib.auth.models import User
 
 
 class TodoModelTest(TestCase):
@@ -19,11 +20,12 @@ class TodoModelTest(TestCase):
             text         : Todo Text 2
             is_completed : False (default)
         """
+        user = User.objects.create_user(username="test")
         mocked = datetime(2020, 5, 19, 0, 0, 0, tzinfo=utc)
 
         with mock.patch("django.utils.timezone.now", mock.Mock(return_value=mocked)):
-            Todo.objects.create(text="Todo Text 1", is_completed=True)
-            Todo.objects.create(text="Todo Text 2")
+            Todo.objects.create(text="Todo Text 1", is_completed=True, user=user)
+            Todo.objects.create(text="Todo Text 2", user=user)
 
     def test_todo_create_success(self):
         """Todo model creation success test

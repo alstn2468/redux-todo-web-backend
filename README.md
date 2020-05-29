@@ -22,7 +22,7 @@ This repository is backend server of this [Redux_ToDo_Web](https://github.com/al
 ### ⏰ To Do
 
 -   [x] Connect to [Front-End Web Application](https://github.com/alstn2468/Redux_ToDo_Web)
--   [ ] Implement authentication logic using jwt
+-   [x] Implement authentication logic using jwt
 -   [ ] Implement kakao oauth
 -   [ ] Implement github oauth
 -   [ ] Implement google oauth
@@ -41,9 +41,9 @@ GET /todo
 
 ##### 2️⃣ Parameter
 
-| Name | Description | Required |
-| :--: | :---------: | :------: |
-|  -   |      -      |    -     |
+| Name  | Description | Required |
+| :---: | :---------: | :------: |
+|   -   |      -      |    -     |
 
 ##### 3️⃣ Response
 
@@ -88,9 +88,9 @@ POST /todo
 
 ##### 2️⃣ Parameter
 
-| Name |         Description          | Required |
-| :--: | :--------------------------: | :------: |
-| text | Todo item text to be created |    ✔     |
+| Name  |         Description          | Required |
+| :---: | :--------------------------: | :------: |
+| text  | Todo item text to be created |    ✔     |
 
 ##### 3️⃣ Response
 
@@ -131,9 +131,9 @@ DELETE /todo
 
 ##### 2️⃣ Parameter
 
-| Name | Description | Required |
-| :--: | :---------: | :------: |
-|  -   |      -      |    -     |
+| Name  | Description | Required |
+| :---: | :---------: | :------: |
+|   -   |      -      |    -     |
 
 ##### 3️⃣ Response
 
@@ -215,9 +215,9 @@ DELETE /todo/:id
 
 ##### 2️⃣ Parameter
 
-| Name | Description | Required |
-| :--: | :---------: | :------: |
-|  -   |      -      |    -     |
+| Name  | Description | Required |
+| :---: | :---------: | :------: |
+|   -   |      -      |    -     |
 
 ##### 3️⃣ Response
 
