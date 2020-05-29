@@ -20,7 +20,11 @@ class JsonWebTokenMiddleWare(object):
 
     def __call__(self, request):
         try:
-            if request.path != "/signup" and request.path != "/login":
+            if (
+                request.path != "/signup"
+                and request.path != "/login"
+                and "admin" not in request.path
+            ):
                 # Except signup and login
                 headers = request.headers
                 # Get Authorization header or None
