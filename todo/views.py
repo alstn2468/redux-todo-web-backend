@@ -77,7 +77,8 @@ def todo_detail_view(request, id):
             todo = user.todo_set.get(id=id)
 
             for key in json_body:
-                setattr(todo, key, json_body[key])
+                if key != "user":
+                    setattr(todo, key, json_body[key])
 
             todo.save()
 
@@ -94,7 +95,8 @@ def todo_detail_view(request, id):
         else:
             return HttpResponseNotAllowed(["PUT", "DELETE"])
 
-    except Exception:
+    except Exception as e:
+        print(e)
         data["error"] = "An error has occurred. Please try again."
         status = HTTPStatus.INTERNAL_SERVER_ERROR
 
