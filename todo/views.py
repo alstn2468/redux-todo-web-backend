@@ -2,6 +2,7 @@ from django.http import JsonResponse, HttpResponseNotAllowed
 from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 from django.contrib.auth.models import User
+from jwt.exceptions import ExpiredSignatureError
 from user.utils.jwt import decode_jwt
 from todo.models import Todo
 from http import HTTPStatus

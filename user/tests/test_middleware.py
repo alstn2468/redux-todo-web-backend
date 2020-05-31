@@ -24,6 +24,14 @@ JWT_WITHOUT_USER = encode_jwt(
     }
 )
 
+EXPIRED_TOKEN = encode_jwt(
+    {
+        "iat": (datetime.now() - timedelta(days=9)).timestamp(),
+        "exp": (datetime.now() - timedelta(days=2)).timestamp(),
+        "iss": "Redux Todo Web Backend",
+    }
+)
+
 
 class MockedRequest(object):
     def __init__(self, path, headers={}):
@@ -79,6 +87,24 @@ class JsonWebTokenMiddleWareTest(TestCase):
 
         self.assertIn("error", response_content.keys())
         self.assertIn("Authorization Error", response_content["error"])
+
+    def test_json_web_token_middleware_expired_token(self):
+        """JsonWebTokenMiddleWare with expired access token test
+        Check middleware return forbidden response with error
+        """
+        self.assertEqual("mocked_get_response", self.middleware.get_response.__name__)
+        self.assertEqual("JsonWebTokenMiddleWare", self.middleware.__class__.__name__)
+
+        response = self.middleware.__call__(
+            MockedRequest("/todo", {"Authorization": EXPIRED_TOKEN})
+        )
+        self.assertIsInstance(response, JsonResponse)
+        self.assertEqual(response.status_code, HTTPStatus.FORBIDDEN)
+
+        response_content = loads(response.content)
+
+        self.assertIn("error", response_content.keys())
+        self.assertIn("Expired token. Please log in again.", response_content["error"])
 
     def test_json_web_token_middleware_another_path(self):
         """JsonWebTokenMiddleWare excpt '/signup', '/login' path test

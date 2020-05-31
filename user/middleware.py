@@ -51,7 +51,13 @@ class JsonWebTokenMiddleWare(object):
 
             return response
 
-        except (PermissionDenied, User.DoesNotExist, ExpiredSignatureError):
+        except (PermissionDenied, User.DoesNotExist):
             return JsonResponse(
                 {"error": "Authorization Error"}, status=HTTPStatus.UNAUTHORIZED
+            )
+
+        except ExpiredSignatureError:
+            return JsonResponse(
+                {"error": "Expired token. Please log in again."},
+                status=HTTPStatus.FORBIDDEN,
             )
