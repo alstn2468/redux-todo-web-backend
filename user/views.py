@@ -83,7 +83,7 @@ def signup_view(request):
             user.set_password(password)
             user.save()
 
-            data["access_token"] = generate_access_token(user.username)
+            data["access_token"] = generate_access_token(username)
             data["user"] = username
 
         else:
