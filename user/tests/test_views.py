@@ -267,6 +267,27 @@ class UserViewTest(TestCase):
             "Duplicate user name. Please use a different name.", json_response["error"]
         )
 
+    def test_signup_view_post_method_invalid_username(self):
+        """User application signup_view post method invalid username test
+        Check signup_view return JsonResponse with bad request response
+        """
+        response = self.client.post(
+            "/signup",
+            data={
+                "user": "abc!",
+                "password": "fakepwd0128@",
+                "passwordConfirm": "fakepwd0128@",
+            },
+            content_type="application/json",
+        )
+        self.assertIsInstance(response, JsonResponse)
+        self.assertEqual(HTTPStatus.BAD_REQUEST, response.status_code)
+
+        json_response = response.json()
+
+        self.assertIn("error", json_response.keys())
+        self.assertIn("Please check the username condition.", json_response["error"])
+
     def test_signup_view_except_post_method(self):
         """User application signup_view another method test
         Check signup_view return HttpResponseNotAllowed

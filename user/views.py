@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.validators import UnicodeUsernameValidator
 from user.utils.jwt import encode_jwt
 from datetime import datetime, timedelta
 from json import loads
@@ -77,6 +78,11 @@ def signup_view(request):
             if password != password_confirm:
                 raise ValueError()
 
+            username_validator = UnicodeUsernameValidator(
+                message="Please check the username condition."
+            )
+
+            username_validator(username)
             validate_password(password)
 
             user = User.objects.create_user(username=username)
