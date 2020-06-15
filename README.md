@@ -21,7 +21,7 @@ This repository is backend server of this [Redux_ToDo_Web](https://github.com/al
 -   Updated one todo item [➡️](#updated-one-todo-item)
 -   Delete one todo itme [➡️](#delete-one-todo-item)
 
-### ⏰ To Do
+### ⏰&nbsp To Do
 
 -   [x] Connect to [Front-End Web Application](https://github.com/alstn2468/Redux_ToDo_Web)
 -   [x] Implement authentication logic using jwt
@@ -31,31 +31,31 @@ This repository is backend server of this [Redux_ToDo_Web](https://github.com/al
 -   [x] Deploy to Heroku using Circle CI
 -   [ ] More detailed exception handling
 
-### 📝 Document
+### 📝&nbsp Document
 
 #### Login
 
-##### 1️⃣ Request
+##### 1️⃣&nbsp Request
 
 ```http
 POST /login
 ```
 
-##### 2️⃣ Parameter
+##### 2️⃣&nbsp Parameter
 
 |   Name   |    Description    | Required |
 | :------: | :---------------: | :------: |
 |   user   | Username to login |    ✔     |
 | password | Password to login |    ✔     |
 
-##### 3️⃣ Response
+##### 3️⃣&nbsp Response
 
 |     Name     |                          Description                          |
 | :----------: | :-----------------------------------------------------------: |
 | access_token | Tokens to access API that you put in the Authorization header |
 |    error     |                   Message in case of error                    |
 
-##### 4️⃣ Sample
+##### 4️⃣&nbsp Sample
 
 -   Success
 
@@ -80,13 +80,13 @@ Content-Type: application/json
 
 #### Sign Up
 
-##### 1️⃣ Request
+##### 1️⃣&nbsp Request
 
 ```http
 POST /signup
 ```
 
-##### 2️⃣ Parameter
+##### 2️⃣&nbsp Parameter
 
 |      Name       |                   Description                   | Required |
 | :-------------: | :---------------------------------------------: | :------: |
@@ -94,14 +94,14 @@ POST /signup
 |    password     |                Password to login                |    ✔     |
 | passwordConfirm | Same data as password for password verification |    ✔     |
 
-##### 3️⃣ Response
+##### 3️⃣&nbsp Response
 
 |     Name     |                          Description                          |
 | :----------: | :-----------------------------------------------------------: |
 | access_token | Tokens to access API that you put in the Authorization header |
 |    error     |                   Message in case of error                    |
 
-##### 4️⃣ Sample
+##### 4️⃣&nbsp Sample
 
 -   Success
 
@@ -126,27 +126,27 @@ Content-Type: application/json
 
 #### Get all todo items
 
-##### 1️⃣ Request
+##### 1️⃣&nbsp Request
 
 ```http
 GET /todo
 Authorization: {access_token}
 ```
 
-##### 2️⃣ Parameter
+##### 2️⃣&nbsp Parameter
 
 | Name  | Description | Required |
 | :---: | :---------: | :------: |
 |   -   |      -      |    -     |
 
-##### 3️⃣ Response
+##### 3️⃣&nbsp Response
 
 | Name  |              Description              |
 | :---: | :-----------------------------------: |
 | data  | Array consisting of todo item objects |
 | error |       Message in case of error        |
 
-##### 4️⃣ Sample
+##### 4️⃣&nbsp Sample
 
 -   Success
 
@@ -174,27 +174,27 @@ Content-Type: application/json
 
 #### Create one todo item
 
-##### 1️⃣ Request
+##### 1️⃣&nbsp Request
 
 ```http
 POST /todo
 Authorization: {access_token}
 ```
 
-##### 2️⃣ Parameter
+##### 2️⃣&nbsp Parameter
 
 | Name  |         Description          | Required |
 | :---: | :--------------------------: | :------: |
 | text  | Todo item text to be created |    ✔     |
 
-##### 3️⃣ Response
+##### 3️⃣&nbsp Response
 
 | Name  |       Description        |
 | :---: | :----------------------: |
 | data  | Created todo item object |
 | error | Message in case of error |
 
-##### 4️⃣ Sample
+##### 4️⃣&nbsp Sample
 
 -   Success
 
@@ -223,26 +223,26 @@ Content-Type: application/json
 
 #### Remove all completed todo items
 
-##### 1️⃣ Request
+##### 1️⃣&nbsp Request
 
 ```http
 DELETE /todo
 Authorization: {access_token}
 ```
 
-##### 2️⃣ Parameter
+##### 2️⃣&nbsp Parameter
 
 | Name  | Description | Required |
 | :---: | :---------: | :------: |
 |   -   |      -      |    -     |
 
-##### 3️⃣ Response
+##### 3️⃣&nbsp Response
 
 | Name  |       Description        |
 | :---: | :----------------------: |
 | error | Message in case of error |
 
-##### 4️⃣ Sample
+##### 4️⃣&nbsp Sample
 
 -   Success
 
@@ -263,14 +263,14 @@ Content-Type: application/json
 
 #### Updated one todo item
 
-##### 1️⃣ Request
+##### 1️⃣&nbsp Request
 
 ```http
 PUT /todo/:id
 Authorization: {access_token}
 ```
 
-##### 2️⃣ Parameter
+##### 2️⃣&nbsp Parameter
 
 |    Name     |           Description            | Required |
 | :---------: | :------------------------------: | :------: |
@@ -278,14 +278,14 @@ Authorization: {access_token}
 |    text     |    Text of item to be updated    |    -     |
 | isCompleted | Completion of item to be updated |    -     |
 
-##### 3️⃣ Response
+##### 3️⃣&nbsp Response
 
 | Name  |       Description        |
 | :---: | :----------------------: |
 | data  | Updated todo item object |
 | error | Message in case of error |
 
-##### 4️⃣ Sample
+##### 4️⃣&nbsp Sample
 
 -   Success
 
@@ -314,26 +314,26 @@ Content-Type: application/json
 
 #### Delete one todo item
 
-##### 1️⃣ Request
+##### 1️⃣&nbsp Request
 
 ```http
 DELETE /todo/:id
 Authorization: {access_token}
 ```
 
-##### 2️⃣ Parameter
+##### 2️⃣&nbsp Parameter
 
 | Name  | Description | Required |
 | :---: | :---------: | :------: |
 |   -   |      -      |    -     |
 
-##### 3️⃣ Response
+##### 3️⃣&nbsp Response
 
 | Name  |       Description        |
 | :---: | :----------------------: |
 | error | Message in case of error |
 
-##### 4️⃣ Sample
+##### 4️⃣&nbsp Sample
 
 -   Success
 
